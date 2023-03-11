@@ -1,8 +1,21 @@
 import React from "react";
-import SearchPage from "../SearchPage/SearchPage";
+import { Outlet } from "react-router-dom";
+import NavBar from "../../common/NavBar";
+// import FlightDetailsCard from "../../components/FlightDetailsCard";
+import Footer from "../../Footer";
+// import Flights from "../FlightsListPage/Flights";
+
+// import SearchPage from "../SearchPage/SearchPage";
 
 const Home = () => {
-  return <SearchPage />;
+  return (
+    <>
+      <NavBar>
+        <Outlet />
+      </NavBar>
+      <Footer />
+    </>
+  );
 };
 
 export default Home;

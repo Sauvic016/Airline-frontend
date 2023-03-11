@@ -1,15 +1,41 @@
-import Footer from "./Footer";
+import FlightDetailsCard from "./components/FlightDetailsCard";
+import Flights from "./pages/FlightsListPage/Flights";
 import Home from "./pages/HomePage/Home";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 function App() {
   return (
     <div className="font-poppins bg-slate-50 h-screen overflow-scroll">
-      <Home />
-      <div className="mt-[24rem] mb-20 bg-[#BCBAF7]"></div>
-
-      <Footer />
+      <RouterProvider router={router} />
     </div>
   );
 }
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    children: [
+      {
+        path: "/",
+        element: <SearchPage />,
+      },
+      {
+        path: "/flights",
+        element: <Flights />,
+        // children: [
+        //   {
+        //     path: "departuredate/*",
+        //     element: <Flights />,
+        //   },
+        // ],
+      },
+      {
+        path: "/flightdetails",
+        element: <FlightDetailsCard />,
+      },
+    ],
+  },
+]);
 
 export default App;
