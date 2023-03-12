@@ -9,11 +9,11 @@ const AutoComplelteModal = ({ data, setFormData, formData, setShowOptions, name,
     setShowOptions({ name: false });
   };
   return (
-    <div>
+    <div className="bg-pink-200">
       {data?.map((el) => (
         <span
           key={el.id}
-          className="p-3 mt-2 bg-white flex border-black border rounded-lg shadow-lg cursor-pointer"
+          className="p-3 mt-2 bg-white flex border-black border rounded-lg shadow-lg cursor-pointer w-full"
           onClick={() => handleClick(el, name)}
         >
           {el.name}

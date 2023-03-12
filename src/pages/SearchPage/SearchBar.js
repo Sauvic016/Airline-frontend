@@ -10,7 +10,7 @@ const SearchBar = () => {
   const [formData, setFormData] = useState({
     from: "",
     to: "",
-    DepartureDate: new Date(),
+    DepartureDate: "",
     Passengers: 1,
   });
 
@@ -87,7 +87,10 @@ const SearchBar = () => {
           onChange={(e) => handleCityData(e)}
         />
         {showOptions.from ? (
-          <div className="absolute left-24 top-24">
+          <div
+            className="absolute left-5 top-[72px] p-2 bg-slate-50 mb-5 mt-2 focus-within:outline-none rounded-xl placeholder:text-sm font-medium placeholder:text-[rgba(0,0,0,0.25)] w-3/4
+          lg:m-auto lg:mr-2 lg:w-2/12 xl:h-fit"
+          >
             <AutoComplelteModal
               name={"from"}
               data={cityData?.from}
