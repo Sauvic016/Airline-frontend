@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../context/userContext";
+// import { userlogin } from "../util/api";
 
-const SignIn = () => {
+const SignIn = ({ setOpen }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-  const handleSubmit = (e) => {
+
+  const { login } = useContext(UserContext);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(loginData);
     //call api
+    await login(loginData);
+    // console.log(user);
+    setOpen(false);
   };
 
   return (
@@ -20,6 +26,7 @@ const SignIn = () => {
         className="bg-slate-100 mb-3 rounded-md p-2 pl-3 focus-within:outline-none"
         placeholder="Enter your email"
         value={loginData.email}
+        required
         onChange={(e) => setLoginData({ ...loginData, [e.target.name]: e.target.value })}
       />
       <label className="flex">Password :</label>
@@ -29,6 +36,7 @@ const SignIn = () => {
         className="bg-slate-100 mb-3 rounded-md p-2 pl-3 focus-within:outline-none"
         placeholder="Enter your password"
         value={loginData.password}
+        required
         onChange={(e) => setLoginData({ ...loginData, [e.target.name]: e.target.value })}
       />
       <div className="flex justify-center">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import SignIn from "./SignIn";
 import SignUP from "./SignUp";
+import { ToastContainer } from "react-toastify";
 
 const SignInSignUpModal = ({ show, setOpen }) => {
   const [isSignInForm, setSignInForm] = useState(true);
@@ -21,12 +22,10 @@ const SignInSignUpModal = ({ show, setOpen }) => {
         open={show}
         onOk={handleOk}
         onCancel={handleCancel}
-        // okButtonProps={{ disabled: true }}
-        // cancelButtonProps={{ disabled: true }}
         footer={null}
         className="text-center w-1/4"
       >
-        {isSignInForm ? <SignIn /> : <SignUP />}
+        {isSignInForm ? <SignIn setOpen={setOpen} /> : <SignUP setSignInForm={setSignInForm} />}
         <div className="flex items-center justify-end cursor-default">
           {isSignInForm ? (
             <>
@@ -55,6 +54,18 @@ const SignInSignUpModal = ({ show, setOpen }) => {
           )}
         </div>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
