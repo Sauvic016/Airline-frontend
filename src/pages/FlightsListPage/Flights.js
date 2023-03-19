@@ -6,16 +6,13 @@ const Flights = () => {
   const [searchParams] = useSearchParams();
   const [flightData, setFlightData] = useState();
 
-  const params = {};
-  searchParams.forEach((val, key) => {
-    params[key] = val;
-  });
+  const params = Object.fromEntries([...searchParams]);
 
   useEffect(() => {
     let isSubscribed = true;
     const fetchData = async () => {
       const apiCall = await fetch(
-        `http://localhost:3001/searchservice/api/v1/flights?date=${params.departuredate}&departureCityId=${params.departureCityId}&arrivalCityId=${params.arrivalCityId}`
+        `http://localhost:3005/searchservice/api/v1/flights?date=${params.departuredate}&departureCityId=${params.departureCityId}&arrivalCityId=${params.arrivalCityId}`
       );
       const data = await apiCall.json();
       if (isSubscribed && data.success) {
@@ -28,18 +25,12 @@ const Flights = () => {
       isSubscribed = false;
     };
   }, [params.departuredate, params.departureCityId, params.arrivalCityId]);
-  console.log(flightData);
 
   return (
-    <div className="mt-14">
+    <div className="mt-14 pb-32 mx-2 xl:mx-44 ">
       {flightData?.Items?.map((item) => (
         <FlightCard key={item.id} {...item} />
       ))}
-
-      {/* <FlightCard />
-      <FlightCard />
-      <FlightCard />
-      <FlightCard /> */}
     </div>
   );
 };

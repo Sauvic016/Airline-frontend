@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import Button from "../common/Button";
 import UserContext from "../context/userContext";
 // import { userlogin } from "../util/api";
 
@@ -40,7 +41,7 @@ const SignIn = ({ setOpen }) => {
         onChange={(e) => setLoginData({ ...loginData, [e.target.name]: e.target.value })}
       />
       <div className="flex justify-center">
-        <button className="bg-blue-400 rounded-md mt-3 py-3 text-white px-7"> Submit</button>
+        <Button title={"Sign in"} customStyle={" mt-4 py-3 px-6 shadow-xl text-slate-100"} />
       </div>
     </form>
   );

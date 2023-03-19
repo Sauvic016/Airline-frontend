@@ -16,7 +16,12 @@ export function getDuration(startTime, endTime) {
   const durationInMs = end - start;
   const hours = String(Math.floor(durationInMs / (1000 * 60 * 60))).padStart(2, "0");
   const minutes = String(Math.floor((durationInMs % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, "0");
-  const duration = `${hours} hr ${minutes} min`;
+  let duration;
+  if (hours === "00") {
+    duration = `${minutes} min`;
+  } else {
+    duration = `${hours} hr ${minutes} min`;
+  }
 
   return duration;
 }

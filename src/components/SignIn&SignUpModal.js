@@ -31,7 +31,7 @@ const SignInSignUpModal = ({ show, setOpen }) => {
             <>
               New User ?
               <span
-                className=" rounded-lg ml-1 p-2 text-blue-500 cursor-pointer"
+                className=" rounded-lg ml-1 p-2 text-primarypurple cursor-pointer"
                 onClick={() => {
                   setSignInForm((prev) => !prev);
                 }}
@@ -43,7 +43,7 @@ const SignInSignUpModal = ({ show, setOpen }) => {
             <>
               Already Registered ?
               <span
-                className=" rounded-lg ml-1 p-2 text-blue-500 cursor-pointer"
+                className=" rounded-lg ml-1 p-2 text-primarypurple cursor-pointer"
                 onClick={() => {
                   setSignInForm((prev) => !prev);
                 }}
@@ -55,15 +55,13 @@ const SignInSignUpModal = ({ show, setOpen }) => {
         </div>
       </Modal>
       <ToastContainer
-        position="top-right"
-        autoClose={1500}
-        hideProgressBar
+        position="top-center"
+        autoClose={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
         theme="light"
       />
     </>

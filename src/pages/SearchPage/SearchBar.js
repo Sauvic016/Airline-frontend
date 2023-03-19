@@ -36,6 +36,7 @@ const SearchBar = () => {
       });
     } catch (error) {
       console.log("Error", error);
+      //error handling
     }
   };
 
@@ -53,7 +54,6 @@ const SearchBar = () => {
           });
         }
         const data = await apicall.json();
-        console.log(data);
         setCityData({ ...cityData, [e.target.name]: data.data });
         setShowOptions({ [e.target.name]: true });
       } else {
@@ -144,7 +144,10 @@ const SearchBar = () => {
             onChange={(e) => handleFormData(e)}
           />
         </div>
-        <Button title={"Search flight"} customStyle={"py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"} />
+        <Button
+          title={"Search flight"}
+          customStyle={"text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"}
+        />
       </form>
     </>
   );

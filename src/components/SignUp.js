@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Button from "../common/Button";
+
+import { userRegister } from "../util/api";
 
 const SignUP = ({ setSignInForm }) => {
   const [registerData, setRegisterData] = useState({
@@ -8,18 +11,19 @@ const SignUP = ({ setSignInForm }) => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("called", registerData);
+    const user = await userRegister(registerData);
+    console.log(user);
 
-    toast.success("🦄 Successfully Registered! Please Sign in ", {
-      position: "top-right",
-      autoClose: 1100,
-      hideProgressBar: true,
+    toast.success("🦄 Please verify your email address !", {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: 1,
       theme: "light",
     });
     setSignInForm(true);
@@ -59,7 +63,7 @@ const SignUP = ({ setSignInForm }) => {
           onChange={(e) => setRegisterData({ ...registerData, [e.target.name]: e.target.value })}
         />
         <div className="flex justify-center">
-          <button className="bg-blue-400 rounded-md mt-3 py-3 text-white px-7"> Create Account</button>
+          <Button title={"Create Account"} customStyle={" mt-4 py-4 px-5 shadow-xl text-slate-100 "} />
         </div>
       </form>
     </>

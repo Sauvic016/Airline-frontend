@@ -25,13 +25,13 @@ const router = createBrowserRouter([
         element: <Flights />,
         // children: [
         //   {
-        //     path: "departuredate/*",
-        //     element: <Flights />,
+        //     path: ":id",
+        //     element: <FlightDetailsCard />,
         //   },
         // ],
       },
       {
-        path: "/flightdetails",
+        path: "/flightdetails/:id",
         element: <FlightDetailsCard />,
       },
     ],
