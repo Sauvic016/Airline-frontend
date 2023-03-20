@@ -83,13 +83,14 @@ const SearchBar = () => {
           autoComplete="off"
           placeholder="From (location)"
           value={formData.from}
+          required
           name="from"
           onChange={(e) => handleCityData(e)}
         />
         {showOptions.from ? (
           <div
             className="absolute left-5 top-[72px] p-2 bg-slate-50 mb-5 mt-2 focus-within:outline-none rounded-xl placeholder:text-sm font-medium placeholder:text-[rgba(0,0,0,0.25)] w-3/4
-          lg:m-auto lg:mr-2 lg:w-2/12 xl:h-fit"
+          lg:m-auto lg:mr-2 lg:w-2/12 xl:h-fit z-[999]"
           >
             <AutoComplelteModal
               name={"from"}
@@ -109,11 +110,15 @@ const SearchBar = () => {
           lg:m-auto lg:mr-2 xl:w-3/12"
           placeholder="To (destination)"
           value={formData.to}
+          required
           name="to"
           onChange={(e) => handleCityData(e)}
         />
         {showOptions.to ? (
-          <div className="absolute left-64 top-24">
+          <div
+            className="absolute  w-3/4
+          lg:m-auto lg:mr-2 lg:w-2/12 xl:h-fit top-36 lg:left-64 lg:top-24 z-[999]"
+          >
             <AutoComplelteModal
               name={"to"}
               data={cityData?.to}
@@ -133,6 +138,7 @@ const SearchBar = () => {
             placeholder="Departure"
             style={{ fontFamily: "Poppins" }}
             onChange={onDateChange}
+            required
           />
           <input
             type="number"
@@ -141,12 +147,13 @@ const SearchBar = () => {
             lg:my-auto lg:mr-2"
             value={formData.Passengers}
             name="Passengers"
+            required
             onChange={(e) => handleFormData(e)}
           />
         </div>
         <Button
           title={"Search flight"}
-          customStyle={"text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"}
+          customStyle={" bg-primarypurple text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"}
         />
       </form>
     </>

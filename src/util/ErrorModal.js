@@ -1,21 +1,30 @@
 import { Modal } from "antd";
-// import { useState } from "react";
-const ErrorModal = ({ show, setShow }) => {
-  // const [modal2Open, setModal2Open] = useState(false);
+import ErrorImg from "../assets/error_icon.png";
+const ErrorModal = ({ show, setShow, Message }) => {
   return (
     <>
       <Modal
-        title="❗❗❗ Attention "
         centered
         open={show}
+        footer={false}
         onOk={() => setShow(false)}
         onCancel={() => setShow(false)}
-        width={1000}
+        // width={1000}
+        cancelButtonProps={{
+          className: "border border-gray-200 text-primarypurple",
+          type: "ghost",
+        }}
         okButtonProps={{
-          className: "bg-[#605DEC]",
+          className: "bg-[#605DEC] text-white",
+          type: "ghost",
         }}
       >
-        <p>Please confirm your email address !!!</p>
+        <div className="flex flex-col justify-center text-center">
+          <div className="flex justify-center">
+            <img src={ErrorImg} alt="erroicon" />
+          </div>
+          <p>{Message}</p>
+        </div>
       </Modal>
     </>
   );

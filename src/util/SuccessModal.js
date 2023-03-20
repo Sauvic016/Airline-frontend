@@ -41,7 +41,7 @@ const SuccessModal = ({ show, setShow }) => {
         <div className="flex justify-center my-9">
           <Button
             title={"Done"}
-            customStyle={" py-2 px-6 shadow-xl text-slate-100 font-bold text-base"}
+            customStyle={" bg-primarypurple py-2 px-6 shadow-xl text-slate-100 font-bold text-base"}
             onClick={handleDone}
           />
         </div>

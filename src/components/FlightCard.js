@@ -40,7 +40,9 @@ const FlightCard = ({ flightNumber, departureTime, arrivalTime, price, id }) => 
           <div className="flex justify-center">
             <Button
               title={"Check"}
-              customStyle={"text-slate-100 py-2 px-10  mx-2 mt-4 mb-2 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"}
+              customStyle={
+                "text-slate-100 bg-primarypurple py-2 px-10  mx-2 mt-4 mb-2 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"
+              }
               onClick={handleFlightDetails}
             />
           </div>

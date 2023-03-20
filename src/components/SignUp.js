@@ -63,7 +63,7 @@ const SignUP = ({ setSignInForm }) => {
           onChange={(e) => setRegisterData({ ...registerData, [e.target.name]: e.target.value })}
         />
         <div className="flex justify-center">
-          <Button title={"Create Account"} customStyle={" mt-4 py-4 px-5 shadow-xl text-slate-100 "} />
+          <Button title={"Create Account"} customStyle={" bg-primarypurple mt-4 py-4 px-5 shadow-xl text-slate-100 "} />
         </div>
       </form>
     </>

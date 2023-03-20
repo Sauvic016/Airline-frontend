@@ -41,7 +41,7 @@ const SignIn = ({ setOpen }) => {
         onChange={(e) => setLoginData({ ...loginData, [e.target.name]: e.target.value })}
       />
       <div className="flex justify-center">
-        <Button title={"Sign in"} customStyle={" mt-4 py-3 px-6 shadow-xl text-slate-100"} />
+        <Button title={"Sign in"} customStyle={"bg-primarypurple mt-4 py-3 px-6 shadow-xl text-slate-100"} />
       </div>
     </form>
   );

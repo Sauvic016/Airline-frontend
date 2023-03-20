@@ -14,6 +14,7 @@ const FlightDetailsCard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isSuccessVisible, setSuccessVisible] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const { id } = useParams();
   // console.log(id);
 
@@ -53,7 +54,11 @@ const FlightDetailsCard = () => {
   const handleBookingModal = async () => {
     // console.log(currentUser);
     // console.log({ flightId: Number(id), userId: currentUser.id, noOfSeats: counter });
-    if (currentUser.status !== "Active") {
+    if (!currentUser) {
+      setErrorMsg("Please Sign in before booking a flight");
+      setIsError((prev) => !prev);
+    } else if (currentUser.status !== "Active") {
+      setErrorMsg("Please confirm your email address");
       setIsError((prev) => !prev);
     } else {
       setIsVisible((prev) => !prev);
@@ -69,7 +74,6 @@ const FlightDetailsCard = () => {
     date = data.split(",");
     date = `${date[0]}${date[1]}`;
     totalCost = flightData.price * counter;
-    console.log(flightData);
   }
   return (
     <div className="mt-24 lg:mx-36 xl:mx-56 2xl:mx-64">
@@ -110,7 +114,11 @@ const FlightDetailsCard = () => {
       </div>
       <div className="flex justify-center mt-4 gap-4">
         <Button title={"Cancel"} customStyle={"bg-white text-primarypurple py-4 px-5 font-semibold lg:font-semibold"} />
-        <Button title={"Select"} customStyle={"p-4 px-6 shadow-xl text-slate-100"} onClick={handleBookingModal} />
+        <Button
+          title={"Select"}
+          customStyle={"p-4 px-6 bg-primarypurple text-slate-100"}
+          onClick={handleBookingModal}
+        />
       </div>
       {isVisible && (
         <BookingModal
@@ -130,7 +138,7 @@ const FlightDetailsCard = () => {
           setSuccessVisible={setSuccessVisible}
         />
       )}
-      {isError && <ErrorModal show={isError} setShow={setIsError} />}
+      {isError && <ErrorModal show={isError} setShow={setIsError} Message={errorMsg} />}
       {isSuccessVisible && <SuccessModal show={isSuccessVisible} setShow={setSuccessVisible} />}
     </div>
   );
