@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../common/Button";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getDuration, getTimeIST } from "../util/helper";
 import BookingModal from "../pages/BookingPage/BookingModal";
 import { useContext } from "react";
@@ -18,6 +18,7 @@ const FlightDetailsCard = () => {
   const { id } = useParams();
   // console.log(id);
 
+  const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
   useEffect(() => {
     let isSubscribed = true;
@@ -113,7 +114,11 @@ const FlightDetailsCard = () => {
         </div>
       </div>
       <div className="flex justify-center mt-4 gap-4">
-        <Button title={"Cancel"} customStyle={"bg-white text-primarypurple py-4 px-5 font-semibold lg:font-semibold"} />
+        <Button
+          title={"Cancel"}
+          customStyle={"bg-white text-primarypurple py-4 px-5 font-semibold lg:font-semibold"}
+          onClick={() => navigate(-1)}
+        />
         <Button
           title={"Select"}
           customStyle={"p-4 px-6 bg-primarypurple text-slate-100"}

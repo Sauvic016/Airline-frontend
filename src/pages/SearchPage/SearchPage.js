@@ -1,10 +1,12 @@
 import React from "react";
-import SearchBar from "./SearchBar";
+import SearchBarMui from "./searchBarMui.jsx";
+// import SearchBar from "./SearchBar";
 
 const SearchPage = () => {
   return (
     <>
-      <SearchBar />
+      {/* <SearchBar /> */}
+      <SearchBarMui />
     </>
   );
 };
