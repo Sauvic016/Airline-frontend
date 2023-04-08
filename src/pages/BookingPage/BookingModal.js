@@ -25,7 +25,7 @@ const BookingModal = ({
     setConfirmLoading(true);
 
     try {
-      const apicall = await fetch(`http://localhost:3005/bookingservice/api/v1/bookings`, {
+      const apicall = await fetch(`${process.env.REACT_APP_BOOKING_API_URL}`, {
         method: "POST",
         headers: {
           Accept: "application/json",

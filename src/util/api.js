@@ -1,9 +1,8 @@
 import axios from "axios";
-const AUTH_API_URL = `http://localhost:3005/authservice/api/v1`;
 
 export const userlogin = async (data) => {
   try {
-    const user = await axios.post(`${AUTH_API_URL}/signin`, data);
+    const user = await axios.post(`${process.env.REACT_APP_AUTH_API_URL}/signin`, data);
 
     const token = user.data?.data?.token;
     if (token) {
@@ -11,7 +10,7 @@ export const userlogin = async (data) => {
     }
     return user.data.data;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 
@@ -25,7 +24,7 @@ export const isAuthenticated = () => {
 
 export const userRegister = async (data) => {
   try {
-    const user = await axios.post(`${AUTH_API_URL}/signup`, data);
+    const user = await axios.post(`${process.env.REACT_APP_AUTH_API_URL}/signup`, data);
     return user;
   } catch (error) {
     console.log(error);

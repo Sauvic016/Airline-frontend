@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import Button from "../common/Button";
 import UserContext from "../context/userContext";
 // import { userlogin } from "../util/api";
@@ -13,9 +14,24 @@ const SignIn = ({ setOpen }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //call api
-    await login(loginData);
+    try {
+      await login(loginData);
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+      toast.error(`${error.response.data.err}`, {
+        position: "top-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: 1,
+        theme: "light",
+      });
+    }
+
     // console.log(user);
-    setOpen(false);
   };
 
   return (

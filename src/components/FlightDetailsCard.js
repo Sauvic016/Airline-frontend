@@ -23,7 +23,8 @@ const FlightDetailsCard = () => {
   useEffect(() => {
     let isSubscribed = true;
     const fetchData = async () => {
-      const apiCall = await fetch(`http://localhost:3001/searchservice/api/v1/flights/${id}`);
+      console.time();
+      const apiCall = await fetch(`${process.env.REACT_APP_SEARCH_API_URL}/flights/${id}`);
       const data = await apiCall.json();
       if (isSubscribed && data.success) {
         setFlightData(data.data);

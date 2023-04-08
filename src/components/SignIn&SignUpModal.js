@@ -18,7 +18,7 @@ const SignInSignUpModal = ({ show, setOpen }) => {
   return (
     <>
       <Modal
-        title={isSignInForm ? "Sign In to EzFlights" : "Sign up for EzFlights"}
+        title={isSignInForm ? "Login to EzFlights" : "Register for EzFlights"}
         open={show}
         centered
         onOk={handleOk}

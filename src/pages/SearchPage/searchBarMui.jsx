@@ -2,12 +2,29 @@ import React, { useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import { debounce } from "lodash";
 import Button from "../../common/Button";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+
+const debouncedSearchOptions = debounce(async (searchTerm, setOption, setIsLoading, setCityData, type) => {
+  setIsLoading(true);
+  try {
+    console.time();
+    const response = await fetch(`http://localhost:3005/searchservice/api/v1/city?name=${searchTerm}`);
+    const data = await response.json();
+    console.timeEnd();
+    if (data.success) {
+      setOption((prevData) => ({ ...prevData, [type]: [...data.data] }));
+      setCityData((prevData) => ({ ...prevData, [type]: data.data }));
+    }
+  } catch (error) {
+    console.error(error?.message);
+  }
+  setIsLoading(false);
+}, 500);
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -19,10 +36,16 @@ const SearchBar = () => {
     Passengers: 1,
   });
 
-  const [value1, setValue1] = useState("");
-  const [option1, setOption1] = useState([]);
-  const [option2, setOption2] = useState([]);
-  const [value2, setValue2] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [values, setValues] = useState({
+    from: "",
+    to: "",
+  });
+  const [options, setOptions] = useState({
+    from: [],
+    to: [],
+  });
 
   const [cityData, setCityData] = useState({
     from: {},
@@ -41,68 +64,24 @@ const SearchBar = () => {
     try {
       let d = new Date(formData.DepartureDate);
       d = d.toLocaleDateString("fr-CA");
-      // if ((Object.entries(cityData).length === 0 && cityData.constructor === Object) || cityData.length === 0) {
-      //   throw new Error("kk");
-      // } else {
       navigate({
         pathname: `/flights`,
         search: `?departuredate=${d}&departureCityId=${cityData.from[0]?.id}&arrivalCityId=${cityData.to[0]?.id}`,
       });
-      // }
     } catch (error) {
       console.log("Error", error);
-      //error handling
+      //error handling(v2)
     }
   };
 
-  const handleAutocompleteChange1 = async (event, newValue) => {
-    try {
-      if (newValue.length !== 0) {
-        const response = await fetchDataFromApi(newValue);
-        setValue1(newValue);
-        setOption1([...response?.data]);
-        setCityData({ ...cityData, from: response?.data });
-      } else {
-        setValue1("");
-        setOption1([]);
-        setCityData({ ...cityData, from: "" });
-      }
-    } catch (error) {
-      setValue1(newValue);
-      setOption1([]);
-    }
-  };
-  const handleAutocompleteChange2 = async (event, newValue) => {
-    try {
-      if (newValue.length) {
-        const response = await fetchDataFromApi(newValue);
-        setValue2(newValue);
-        setOption2([...response?.data]);
-        setCityData({ ...cityData, to: response?.data });
-      } else {
-        setValue2("");
-        setOption2([]);
-        setCityData({ ...cityData, to: "" });
-      }
-    } catch (error) {
-      setValue2(newValue);
-      setOption2([]);
-    }
-  };
+  const handleAutocompleteChange = (event, value, type) => {
+    const updatedValues = { ...values, [type]: value };
+    setValues(updatedValues);
 
-  const fetchDataFromApi = async (newInputValue) => {
-    try {
-      const response = await fetch(`http://localhost:3001/searchservice/api/v1/city?name=${newInputValue}`);
-      if (!response.ok) {
-        throw new Error("Bad Response", {
-          cause: { response },
-        });
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      return "";
+    if (value.length > 0) {
+      debouncedSearchOptions(value, setOptions, setIsLoading, setCityData, type);
+    } else {
+      setOptions((prev) => ({ ...prev, [type]: [] }));
     }
   };
 
@@ -115,11 +94,11 @@ const SearchBar = () => {
         <div className="lg:flex lg:justify-between lg:w-6/12 ">
           <Autocomplete
             id="autocomplete-1"
-            options={option1}
+            options={options.from}
             getOptionLabel={(option) => option?.name}
             isOptionEqualToValue={(option, value) => option?.name === value?.name}
-            inputValue={value1}
-            onInputChange={handleAutocompleteChange1}
+            inputValue={values.from}
+            onInputChange={(event, newValue) => handleAutocompleteChange(event, newValue, "from")}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -153,14 +132,15 @@ const SearchBar = () => {
             )}
             popupIcon={""}
             className="bg-slate-100 rounded-xl my-2 lg:w-1/2 lg:mr-2"
+            loading={isLoading}
           />
           <Autocomplete
             id="autocomplete-2"
-            options={option2}
+            options={options.to}
             getOptionLabel={(option) => option?.name || ""}
             isOptionEqualToValue={(option, value) => option?.name === value?.name}
-            inputValue={value2}
-            onInputChange={handleAutocompleteChange2}
+            inputValue={values.to}
+            onInputChange={(event, newValue) => handleAutocompleteChange(event, newValue, "to")}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -194,6 +174,7 @@ const SearchBar = () => {
             )}
             popupIcon={""}
             className="bg-slate-100 rounded-xl my-2 lg:w-1/2  lg:mr-2 placeholder:text-sm"
+            loading={isLoading}
           />
         </div>
         <div className=" flex gap-2 mb-4 lg:m-auto lg:gap-1 xl:gap-2 xl:w-4/12">
@@ -268,7 +249,9 @@ const SearchBar = () => {
         </div>
         <Button
           title={"Search flight"}
-          customStyle={" bg-primarypurple text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:w-1/4 xl:w-2/12"}
+          customStyle={
+            " bg-primarypurple text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:ml-2 lg:w-1/4 xl:w-2/12"
+          }
         />
       </form>
     </>

@@ -13,8 +13,17 @@ export const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState();
 
   const login = async (inputs) => {
-    const user = await userlogin(inputs);
-    setCurrentUser(user);
+    try {
+      const user = await userlogin(inputs);
+      setCurrentUser(user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    setCurrentUser(null);
+    localStorage.removeItem("user");
   };
 
   useEffect(() => {
@@ -30,7 +39,7 @@ export const UserContextProvider = ({ children }) => {
     checkLoggedIn();
   }, []);
 
-  return <UserContext.Provider value={{ currentUser, setCurrentUser, login }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ currentUser, setCurrentUser, login, logout }}>{children}</UserContext.Provider>;
 };
 
 export default UserContext;

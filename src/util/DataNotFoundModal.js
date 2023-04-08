@@ -1,5 +1,4 @@
 import { Modal } from "antd";
-import ErrorImg from "../assets/error_icon.png";
 const DataNotFoundModal = ({ show, setShow, navigate, Message }) => {
   return (
     <>
@@ -25,12 +24,24 @@ const DataNotFoundModal = ({ show, setShow, navigate, Message }) => {
           type: "ghost",
         }}
       >
-        <div className="flex flex-col  text-center h-96">
-          <div className="flex justify-center">
-            <img src={ErrorImg} alt="erroricon" />
-          </div>
-          <p className="mt-24">No flights are avaiable for this date</p>
+        <div className="bg-white p-6 rounded-lg  text-center">
+          <div className="text-3xl mb-4">😕</div>
+          <h2 className="text-2xl font-bold mb-2">Oops! No Flights</h2>
+          <p className="text-gray-700 mb-4">
+            {" "}
+            There are no flights avaiable for this date please try again with different date .
+          </p>
+          <button
+            className="bg-primarypurple text-white font-bold py-2 px-4 rounded-md"
+            onClick={() => {
+              setShow(false);
+              navigate(-1);
+            }}
+          >
+            Go back to Home
+          </button>
         </div>
+        {/* </div> */}
       </Modal>
     </>
   );
