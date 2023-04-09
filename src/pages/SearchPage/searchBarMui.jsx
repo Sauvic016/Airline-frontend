@@ -12,10 +12,8 @@ import dayjs from "dayjs";
 const debouncedSearchOptions = debounce(async (searchTerm, setOption, setIsLoading, setCityData, type) => {
   setIsLoading(true);
   try {
-    console.time();
     const response = await fetch(`http://localhost:3005/searchservice/api/v1/city?name=${searchTerm}`);
     const data = await response.json();
-    console.timeEnd();
     if (data.success) {
       setOption((prevData) => ({ ...prevData, [type]: [...data.data] }));
       setCityData((prevData) => ({ ...prevData, [type]: data.data }));
@@ -61,17 +59,12 @@ const SearchBar = () => {
 
   const handleSearchFlights = (e) => {
     e.preventDefault();
-    try {
-      let d = new Date(formData.DepartureDate);
-      d = d.toLocaleDateString("fr-CA");
-      navigate({
-        pathname: `/flights`,
-        search: `?departuredate=${d}&departureCityId=${cityData.from[0]?.id}&arrivalCityId=${cityData.to[0]?.id}`,
-      });
-    } catch (error) {
-      console.log("Error", error);
-      //error handling(v2)
-    }
+    let d = new Date(formData.DepartureDate);
+    d = d.toLocaleDateString("fr-CA");
+    navigate({
+      pathname: `/flights`,
+      search: `?departuredate=${d}&departureCityId=${cityData.from[0]?.id}&arrivalCityId=${cityData.to[0]?.id}`,
+    });
   };
 
   const handleAutocompleteChange = (event, value, type) => {

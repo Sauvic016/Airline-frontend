@@ -1,41 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Button from "../common/Button";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { getDuration, getTimeIST } from "../util/helper";
 import BookingModal from "../pages/BookingPage/BookingModal";
 import { useContext } from "react";
 import UserContext from "../context/userContext";
 import ErrorModal from "../util/ErrorModal";
 import SuccessModal from "../util/SuccessModal";
+import LoadingModal from "../util/LoadingModal";
 
 const FlightDetailsCard = () => {
   const [flightData, setFlightData] = useState();
   const [counter, setCounter] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
   const [isSuccessVisible, setSuccessVisible] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [errorFound, setErrorFound] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const { id } = useParams();
-  // console.log(id);
-
+  const fetchFlightData = async () => {
+    const apiCall = await fetch(`${process.env.REACT_APP_SEARCH_API_URL}/flights/${id}`);
+    return await apiCall.json();
+  };
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
-  useEffect(() => {
-    let isSubscribed = true;
-    const fetchData = async () => {
-      console.time();
-      const apiCall = await fetch(`${process.env.REACT_APP_SEARCH_API_URL}/flights/${id}`);
-      const data = await apiCall.json();
-      if (isSubscribed && data.success) {
-        setFlightData(data.data);
-      }
-    };
-    fetchData().catch((err) => console.error("wow:", err));
 
-    return () => {
-      isSubscribed = false;
-    };
-  }, [id]);
+  const { data, isLoading, isError } = useQuery(["flights", id], fetchFlightData, {
+    keepPreviousData: true,
+  });
+
+  useEffect(() => {
+    if (data?.success) {
+      setFlightData(data.data);
+    }
+  }, [data, id, errorFound]);
+
   let departureTime, arrivalTime, duration;
   if (flightData) {
     // const {flightNumber}
@@ -54,18 +53,23 @@ const FlightDetailsCard = () => {
     }
   };
   const handleBookingModal = async () => {
-    // console.log(currentUser);
-    // console.log({ flightId: Number(id), userId: currentUser.id, noOfSeats: counter });
     if (!currentUser) {
       setErrorMsg("Please Sign in before booking a flight");
-      setIsError((prev) => !prev);
+      setErrorFound((prev) => !prev);
     } else if (currentUser.status !== "Active") {
       setErrorMsg("Please confirm your email address");
-      setIsError((prev) => !prev);
+      setErrorFound((prev) => !prev);
     } else {
       setIsVisible((prev) => !prev);
     }
   };
+
+  if (isLoading) {
+    return <LoadingModal isLoading={isLoading} />;
+  }
+  if (isError) {
+    setErrorFound(true);
+  }
   let date, totalCost;
   if (flightData) {
     const data = new Date(flightData?.arrivalTime).toLocaleString("en-IN", {
@@ -144,7 +148,7 @@ const FlightDetailsCard = () => {
           setSuccessVisible={setSuccessVisible}
         />
       )}
-      {isError && <ErrorModal show={isError} setShow={setIsError} Message={errorMsg} />}
+      {errorFound && <ErrorModal show={errorFound} setShow={setErrorFound} Message={errorMsg} />}
       {isSuccessVisible && <SuccessModal show={isSuccessVisible} setShow={setSuccessVisible} />}
     </div>
   );

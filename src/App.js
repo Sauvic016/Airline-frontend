@@ -3,6 +3,7 @@ import Flights from "./pages/FlightsListPage/Flights";
 import Home from "./pages/HomePage/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import VerificationPage from "./pages/verifyEmailpage/VerifyemailPage";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         element: <FlightDetailsCard />,
       },
     ],
+  },
+  {
+    path: "/api/v1/verify-email",
+    element: <VerificationPage />,
   },
 ]);
 

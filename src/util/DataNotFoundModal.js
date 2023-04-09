@@ -29,7 +29,7 @@ const DataNotFoundModal = ({ show, setShow, navigate, Message }) => {
           <h2 className="text-2xl font-bold mb-2">Oops! No Flights</h2>
           <p className="text-gray-700 mb-4">
             {" "}
-            There are no flights avaiable for this date please try again with different date .
+            There are no flights available for this date please try again with different date .
           </p>
           <button
             className="bg-primarypurple text-white font-bold py-2 px-4 rounded-md"

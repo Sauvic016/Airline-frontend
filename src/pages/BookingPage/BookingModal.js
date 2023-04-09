@@ -34,18 +34,15 @@ const BookingModal = ({
         },
         body: JSON.stringify({ flightId, userId: id, noOfSeats }),
       });
-      const data = await apicall.json();
-      console.log(data.data);
+      await apicall.json();
       // v2 do something with the data or show booking confirmation
+      setSuccessVisible((prev) => !prev);
     } catch (error) {
-      console.log(error);
-    }
-    setTimeout(() => {
+      //v2 error handling
+    } finally {
       setShow(false);
       setConfirmLoading(false);
-
-      setSuccessVisible((prev) => !prev);
-    }, 1500);
+    }
   };
 
   return (

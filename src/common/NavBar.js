@@ -12,8 +12,6 @@ const NavBar = ({ children }) => {
     if (currentUser) {
       setIsDropdown((prev) => !prev);
     } else {
-      console.log("called-toOpe");
-
       setOpen((prev) => !prev);
     }
   };

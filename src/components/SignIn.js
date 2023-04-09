@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import Button from "../common/Button";
 import UserContext from "../context/userContext";
 // import { userlogin } from "../util/api";
+import validateEmail from "../util/validation";
 
 const SignIn = ({ setOpen }) => {
   const [loginData, setLoginData] = useState({
@@ -15,23 +16,23 @@ const SignIn = ({ setOpen }) => {
     e.preventDefault();
     //call api
     try {
+      if (!validateEmail(loginData.email)) {
+        throw new Error("Please enter a valid email"); // check if email is valid
+      }
       await login(loginData);
       setOpen(false);
     } catch (error) {
-      console.log(error);
-      toast.error(`${error.response.data.err}`, {
-        position: "top-right",
-        autoClose: false,
+      toast.error(`${error.message}`, {
+        position: "top-center",
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: 1,
+        progress: undefined,
         theme: "light",
       });
     }
-
-    // console.log(user);
   };
 
   return (
@@ -54,6 +55,7 @@ const SignIn = ({ setOpen }) => {
         placeholder="Enter your password"
         value={loginData.password}
         required
+        minLength={3}
         onChange={(e) => setLoginData({ ...loginData, [e.target.name]: e.target.value })}
       />
       <div className="flex justify-center">
