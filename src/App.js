@@ -24,12 +24,6 @@ const router = createBrowserRouter([
       {
         path: "/flights",
         element: <Flights />,
-        // children: [
-        //   {
-        //     path: ":id",
-        //     element: <FlightDetailsCard />,
-        //   },
-        // ],
       },
       {
         path: "/flightdetails/:id",

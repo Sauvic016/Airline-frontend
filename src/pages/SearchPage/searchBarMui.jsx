@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 const debouncedSearchOptions = debounce(async (searchTerm, setOption, setIsLoading, setCityData, type) => {
   setIsLoading(true);
   try {
-    const response = await fetch(`http://localhost:3005/searchservice/api/v1/city?name=${searchTerm}`);
+    const response = await fetch(`${process.env.REACT_APP_SEARCH_API_URL}/city?name=${searchTerm}`);
     const data = await response.json();
     if (data.success) {
       setOption((prevData) => ({ ...prevData, [type]: [...data.data] }));
@@ -80,9 +80,10 @@ const SearchBar = () => {
 
   return (
     <>
+      <h1 className="pl-6 text-white text-2xl mt-8">Search Flights</h1>
       <form
         onSubmit={(e) => handleSearchFlights(e)}
-        className="p-5 flex flex-col justify-center bg-white rounded-xl text-sm z-10 relative m-auto top-8 shadow-lg  lg:flex-row  lg:items-center lg:mt-16 font-poppins font-normal xl:h-32 xl:w-full"
+        className="p-5 flex flex-col justify-center bg-white rounded-xl text-sm z-10 relative m-auto top-4 shadow-lg  lg:flex-row  lg:items-center lg:mt-4 font-poppins font-normal xl:h-32 xl:w-full"
       >
         <div className="lg:flex lg:justify-between lg:w-6/12 ">
           <Autocomplete
@@ -241,7 +242,7 @@ const SearchBar = () => {
           />
         </div>
         <Button
-          title={"Search flight"}
+          title={"Search "}
           customStyle={
             " bg-primarypurple text-slate-100 py-4 px-10  mx-2 my-3 lg:m-auto lg:p-4 lg:ml-2 lg:w-1/4 xl:w-2/12"
           }
