@@ -7,7 +7,7 @@ import VerificationPage from "./pages/verifyEmailpage/VerifyemailPage";
 
 function App() {
   return (
-    <div className="font-poppins bg-slate-50 h-screen overflow-scroll">
+    <div className="font-poppins bg-slate-50 h-screen overflow-scroll overflow-x-hidden">
       <RouterProvider router={router} />
     </div>
   );
