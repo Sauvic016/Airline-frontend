@@ -46,7 +46,7 @@ const VerificationPage = () => {
       <Button
         title={"Back to Home page"}
         customStyle={"bg-primarypurple text-white py-3 px-5 font-semibold lg:font-semibold mt-5"}
-        onClick={() => navigate("/", { replace: true })}
+        onClick={() => navigate("/home", { replace: true })}
       />
     </div>
   ) : (

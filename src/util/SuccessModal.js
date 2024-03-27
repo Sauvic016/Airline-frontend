@@ -8,7 +8,7 @@ const SuccessModal = ({ show, setShow }) => {
   const navigate = useNavigate();
   const handleDone = () => {
     setShow(false);
-    navigate("/", { replace: true });
+    navigate("/home", { replace: true });
   };
   return (
     <>

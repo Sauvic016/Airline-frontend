@@ -11,7 +11,7 @@ const FlightCard = ({ flightNumber, departureTime, arrivalTime, price, id }) => 
   const navigate = useNavigate();
 
   const handleFlightDetails = () => {
-    navigate(`/flightdetails/${id}`);
+    navigate(`/home/flightdetails/${id}`);
   };
 
   return (

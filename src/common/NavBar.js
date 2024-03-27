@@ -36,7 +36,7 @@ const NavBar = ({ children }) => {
       <div className="flex justify-between items-center">
         <h1
           className="px-5 text-4xl font-semibold break-words text-slate-50 cursor-pointer"
-          onClick={() => navigate("/", { replace: true })}
+          onClick={() => navigate("/home", { replace: true })}
         >
           EzFlights 🛫
         </h1>

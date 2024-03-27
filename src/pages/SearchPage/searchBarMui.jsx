@@ -62,7 +62,7 @@ const SearchBar = () => {
     let d = new Date(formData.DepartureDate);
     d = d.toLocaleDateString("fr-CA");
     navigate({
-      pathname: `/flights`,
+      pathname: `/home/flights`,
       search: `?departuredate=${d}&departureCityId=${cityData.from[0]?.id}&arrivalCityId=${cityData.to[0]?.id}`,
     });
   };

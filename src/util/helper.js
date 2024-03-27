@@ -25,3 +25,20 @@ export function getDuration(startTime, endTime) {
 
   return duration;
 }
+
+/*
+const date = new Date("2024-03-17T07:30:00.000Z");
+
+const options = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true,
+  timeZone: 'Europe/London'
+};
+
+const formattedDate = date.toLocaleString('en-GB', options);
+
+console.log(formattedDate); */
